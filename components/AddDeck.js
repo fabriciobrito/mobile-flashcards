@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { addDeck } from '../actions'
 
-export default class AddDeck extends Component {
+class AddDeck extends Component {
   state = {
     deckName: ''
   }
   onChangeText(text) {
     this.setState(()=>({deckName: text}))
   }
-  render() {
+  addDeck = () => {
+    this.props.dispatch(addDeck({name: this.state.deckName}));
+
     const { navigation } = this.props;
+    navigation.navigate('DeckView', {title: this.state.deckName});
+  }
+  render() {
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Enter the Deck Name</Text>
@@ -20,10 +27,12 @@ export default class AddDeck extends Component {
           value={this.state.deckName}
         />
         <TouchableOpacity
-          onPress={() => navigation.navigate('DeckView', {title: this.state.deckName})}>
+          onPress={this.addDeck}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </View>
     )
   }
 }
+
+export default connect()(AddDeck);
