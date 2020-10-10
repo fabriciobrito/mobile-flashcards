@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { connect } from 'react-redux';
+import { View, Text } from 'react-native';
 import DeckIcon from './DeckIcon';
 
-export default class DeckList extends Component {
+class DeckList extends Component {
   render() {
+    const { decks } = this.props;
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <DeckIcon title='Deck 1' />
-        <DeckIcon title='Deck 2' />
+        {decks.length
+          ? decks.map((deck) => (
+              <DeckIcon key={deck} title={deck} />
+            ))
+          : <Text>No Decks Created Yet.</Text>
+        }
       </View>
     )
   }
 }
+
+function mapStateToProps( state ) {
+  return {
+    decks: Object.keys(state)
+  }
+}
+
+export default connect(mapStateToProps)(DeckList);

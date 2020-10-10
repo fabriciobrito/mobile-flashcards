@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { addCard } from '../actions';
 
-export default class AddCard extends Component {
+class AddCard extends Component {
   state = {
     question: '',
     answer: ''
@@ -12,8 +14,13 @@ export default class AddCard extends Component {
   onChangeAnswer(text) {
     this.setState(()=>({answer: text}))
   }
-  render() {
+  onSubmit = () => {
+    this.props.dispatch(addCard({deck: 'sdf', card: this.state}))
+
     const { navigation } = this.props;
+    navigation.navigate('DeckView', {title: this.state.deckName})
+  }
+  render() {
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Enter the Card Question</Text>
@@ -31,10 +38,12 @@ export default class AddCard extends Component {
           value={this.state.answer}
         />
         <TouchableOpacity
-          onPress={() => navigation.navigate('DeckView', {title: this.state.deckName})}>
+          onPress={this.onSubmit}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </View>
     )
   }
 }
+
+export default connect()(AddCard)

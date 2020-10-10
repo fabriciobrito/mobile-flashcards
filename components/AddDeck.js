@@ -11,10 +11,13 @@ class AddDeck extends Component {
     this.setState(()=>({deckName: text}))
   }
   addDeck = () => {
-    this.props.dispatch(addDeck({name: this.state.deckName}));
+    const deck = this.state.deckName;
+    this.props.dispatch(addDeck({name: deck}));
 
     const { navigation } = this.props;
-    navigation.navigate('DeckView', {title: this.state.deckName});
+    navigation.navigate('DeckView', {deck: deck});
+
+    this.setState(() => ({deckName:''}))
   }
   render() {
     return(
