@@ -10,7 +10,7 @@ class DeckList extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {decks.length
           ? decks.map((deck) => (
-              <DeckIcon key={deck} title={deck} />
+              <DeckIcon key={deck} deck={deck} />
             ))
           : <Text>No Decks Created Yet.</Text>
         }

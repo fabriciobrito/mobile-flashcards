@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-export default class DeckView extends Component {
+class DeckView extends Component {
   nextQuestion(direction) {
 
   }
   render() {
-    const { navigation } = this.props
+    const { navigation, route } = this.props;
+    const { deck } = route.params;
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>10 Cards</Text>
@@ -19,7 +21,7 @@ export default class DeckView extends Component {
             <Text>{'>'}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate('AddCard')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddCard', {deck: deck})}>
           <Text>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -35,3 +37,5 @@ export default class DeckView extends Component {
     )
   }
 }
+
+export default connect()(DeckView);
