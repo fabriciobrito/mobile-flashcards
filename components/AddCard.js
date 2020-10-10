@@ -7,10 +7,10 @@ export default class AddCard extends Component {
     answer: ''
   }
   onChangeQuestion(text) {
-    this.setState(()=>{question: text})
+    this.setState(()=>({question: text}))
   }
   onChangeAnswer(text) {
-    this.setState(()=>{answer: text})
+    this.setState(()=>({answer: text}))
   }
   render() {
     const { navigation } = this.props;

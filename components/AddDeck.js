@@ -6,7 +6,7 @@ export default class AddDeck extends Component {
     deckName: ''
   }
   onChangeText(text) {
-    this.setState(()=>{deckName: text})
+    this.setState(()=>({deckName: text}))
   }
   render() {
     const { navigation } = this.props;
@@ -15,7 +15,7 @@ export default class AddDeck extends Component {
         <Text>Enter the Deck Name</Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={text => onChangeText(text)}
+          onChangeText={(text) => this.onChangeText(text)}
           placeholder='Deck Name'
           value={this.state.deckName}
         />
