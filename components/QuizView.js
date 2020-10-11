@@ -34,12 +34,13 @@ class QuizView extends Component {
     this.setState(() => ({showAnswer: true}))
   }
   handleFinishQuiz(correct) {
+    console.log(correct)
     const { navigation, deck } = this.props;
     const { answered, correctAnswers } = this.state;
     navigation.navigate('ResultView', {
-      name: deck.title,
-      answered,
-      correct: correctAnswers + correct? 1 : 0
+      answered: answered + (correct !== undefined? 1 : 0),
+      correct: correctAnswers + correct? 1 : 0,
+      total: deck.questions.length
     })
   }
   render() {

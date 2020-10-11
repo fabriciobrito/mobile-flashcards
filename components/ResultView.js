@@ -3,16 +3,18 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 export default class ResultView extends Component {
   render() {
-    const { navigation } = this.props;
+    const { navigation, route } = this.props;
+    const { answered, correct, total } = route.params;
+    console.log(this.props)
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <View>
-          <Text>50%</Text>
+          <Text>{(correct/answered)*100}%</Text>
           <Text>Correct</Text>
           <Text>Answers</Text>
         </View>
         <View>
-          <Text>10% of</Text>
+          <Text>{(answered/total)*100}% of</Text>
           <Text>Cards from Deck</Text>
           <Text>Answered</Text>
         </View>
