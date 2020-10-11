@@ -1,6 +1,7 @@
 export const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES';
 export const ADD_DECK = 'ADD_DECK';
 export const ADD_CARD = 'ADD_CARD';
+export const DELETE_CARD = 'DELETE_CARD';
 
 export function receiveEntries(entries) {
   return {
@@ -19,6 +20,13 @@ export function addDeck(entry) {
 export function addCard(entry) {
   return {
     type: ADD_CARD,
+    ...entry
+  }
+}
+
+export function deleteCard(entry) {
+  return {
+    type: DELETE_CARD,
     ...entry
   }
 }
