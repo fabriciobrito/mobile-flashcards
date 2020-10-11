@@ -63,13 +63,15 @@ class DeckView extends Component {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('AddCard', {deck: title})}>
+          onPress={() => navigation.navigate('AddCard', {name: title})}>
           <Text>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.onDeleteCard}>
           <Text>Delete Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity  onPress={() => navigation.navigate('QuizView')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('QuizView', {name: title})}
+          disabled={questions.length === 0}>
           <Text>Start Quiz</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.onDeleteDeck}>

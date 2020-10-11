@@ -16,8 +16,8 @@ class AddCard extends Component {
   }
   onSubmit = () => {
     const { dispatch, route } = this.props;
-    const { deck } = route.params;
-    dispatch(addCard({deck: deck, card: this.state}))
+    const { name } = route.params;
+    dispatch(addCard({deck: name, card: this.state}))
 
     const { navigation } = this.props;
     navigation.navigate('DeckView', {title: this.state.deckName})
