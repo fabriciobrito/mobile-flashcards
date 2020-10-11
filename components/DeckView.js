@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { deleteCard } from '../actions'
+import { deleteCard, deleteDeck } from '../actions';
 
 class DeckView extends Component {
   state = {
@@ -21,6 +21,11 @@ class DeckView extends Component {
     const { dispatch, deck } = this.props;
     dispatch(deleteCard({deck: deck.title, card:this.state.questionIndex}))
     this.nextQuestion(0);//clamp index
+  }
+  onDeleteDeck = () => {
+    const { dispatch, deck, navigation } = this.props;
+    dispatch(deleteDeck({deck: deck.title}))
+    navigation.navigate('Home')
   }
   render() {
     const { navigation, deck } = this.props;
@@ -56,7 +61,7 @@ class DeckView extends Component {
         <TouchableOpacity  onPress={() => navigation.navigate('QuizView')}>
           <Text>Start Quiz</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.onDeleteDeck}>
           <Text>Delete Deck</Text>
         </TouchableOpacity>
       </View>

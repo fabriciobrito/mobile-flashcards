@@ -1,5 +1,6 @@
 import { act } from 'react-test-renderer';
-import { RECEIVE_ENTRIES, ADD_DECK, ADD_CARD, DELETE_CARD } from '../actions'
+import { RECEIVE_ENTRIES, ADD_DECK, DELETE_DECK, ADD_CARD, DELETE_CARD }
+  from '../actions';
 
 export default function entries(state = {}, action) {
   switch (action.type) {
@@ -15,6 +16,11 @@ export default function entries(state = {}, action) {
           title: action.name,
           questions: []
         }
+      }
+    case DELETE_DECK:
+      delete state[action.deck];
+      return {
+        ...state
       }
     case ADD_CARD:
       return {
