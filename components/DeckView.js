@@ -5,7 +5,8 @@ import { deleteCard, deleteDeck } from '../actions';
 
 class DeckView extends Component {
   state = {
-    questionIndex: 0
+    questionIndex: 0,
+    showAnswer: false
   }
   nextQuestion(direction) {
     const { deck } = this.props;
@@ -14,7 +15,8 @@ class DeckView extends Component {
       : 0;
     this.setState((prevState) => ({
       questionIndex:
-        Math.max(Math.min(prevState.questionIndex + direction, questions-1), 0)
+        Math.max(Math.min(prevState.questionIndex + direction, questions-1), 0),
+      showAnswer: false
     }))
   }
   onDeleteCard = () => {
@@ -27,27 +29,36 @@ class DeckView extends Component {
     dispatch(deleteDeck({deck: deck.title}))
     navigation.navigate('Home')
   }
+  toggleShowAnswer = () => {
+    this.setState((prevState) => ({
+      showAnswer: !prevState.showAnswer
+    }))
+  }
   render() {
     const { navigation, deck } = this.props;
     const { questions, title } = deck;
-    console.log(questions, this.state.questionIndex);
+    const { questionIndex, showAnswer } = this.state;
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>{deck.questions.length} Cards</Text>
         <View>
           <TouchableOpacity
             onPress={() => this.nextQuestion(-1)}
-            disabled={this.state.questionIndex <= 0}>
+            disabled={questionIndex <= 0}>
             <Text>{'<'}</Text>
           </TouchableOpacity>
-          <Text>
-            {questions.length > 0
-              ? questions[this.state.questionIndex].question
-              : 'No card created yet.'}
-          </Text>
+          <TouchableOpacity onPress={this.toggleShowAnswer}>
+            <Text>
+              {questions.length > 0
+                ? showAnswer
+                  ? questions[questionIndex].answer
+                  : questions[questionIndex].question
+                : 'No card created yet.'}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => this.nextQuestion(1)}
-            disabled={this.state.questionIndex >= questions.length -1}>
+            disabled={questionIndex >= questions.length -1}>
             <Text>{'>'}</Text>
           </TouchableOpacity>
         </View>
