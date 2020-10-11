@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { storeData } from '../utils/api';
 import { addDeck } from '../actions'
 
 class AddDeck extends Component {
@@ -12,7 +13,11 @@ class AddDeck extends Component {
   }
   addDeck = () => {
     const deck = this.state.deckName;
-    this.props.dispatch(addDeck({name: deck}));
+    const entry = {name: deck};
+
+    this.props.dispatch(addDeck(entry));
+
+    //ToDo: Update Local Storage
 
     const { navigation } = this.props;
     navigation.navigate('DeckView', {deck: deck});

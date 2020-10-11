@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
+import { fetchData } from '../utils/api';
+import { receiveEntries } from '../actions'
 import DeckIcon from './DeckIcon';
 
 class DeckList extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    fetchData()
+      .then((value) => {
+        dispatch(receiveEntries(value));
+      }
+    )
+  }
   render() {
     const { decks } = this.props;
     return(
