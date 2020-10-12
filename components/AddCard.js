@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, StyleSheet }
+import { KeyboardAvoidingView, Text, TextInput, StyleSheet }
   from 'react-native';
 import { addCard } from '../actions';
 import NavButton from './NavButton';

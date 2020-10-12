@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, StatusBar }
+  from 'react-native';
 import { connect } from 'react-redux';
+import NavButton from './NavButton';
 
 class QuizView extends Component {
   componentDidMount() {
-    const { deck } = this.props;
+    const { navigation, deck } = this.props;
+    navigation.setOptions({headerTitle: `Quiz: ${deck.title}`})
     this.setState(() => ({
       remainingQuestions: [...deck.questions],
       drawnIndex: Math.floor(Math.random() * deck.questions.length)
@@ -47,33 +50,47 @@ class QuizView extends Component {
     const { deck } = this.props;
     const { answered, showAnswer, drawnIndex, remainingQuestions } = this.state
     return(
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.container}>
       {drawnIndex === undefined
         ? <ActivityIndicator style={{marginTop: 30}} />
-        : <View>
-            <Text>Card {answered + 1} out of {deck.questions.length}</Text>
-            <View>
-              <Text>{remainingQuestions[drawnIndex].question}</Text>
+        : <View style={styles.main}>
+
+            <View style={styles.header}>
+              <Text style={styles.headerTxt}>Card {answered + 1} out of {deck.questions.length}</Text>
+            </View>
+
+            <View style={styles.card}>
+              <Text style={styles.cardTxt}>
+                {remainingQuestions[drawnIndex].question}
+              </Text>
               {showAnswer && (
-                <Text>{remainingQuestions[drawnIndex].answer}</Text>
+                <Text style={styles.cardTxt}>
+                  {remainingQuestions[drawnIndex].answer}
+                </Text>
               )}
             </View>
-            {showAnswer
-              ? <View>
-                  <TouchableOpacity onPress={() => this.drawNextQuestion(true)}>
-                    <Text>Correct</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.drawNextQuestion(false)}>
-                    <Text>Incorrect</Text>
-                  </TouchableOpacity>
-                </View>
-              : <TouchableOpacity onPress={this.revealAnswer}>
-                  <Text>View Answer</Text>
-                </TouchableOpacity>
-            }
-            <TouchableOpacity onPress={() => this.handleFinishQuiz()}>
-              <Text>Finish Quiz</Text>
-            </TouchableOpacity>
+
+            <View style={styles.answerBts}>
+              {showAnswer
+                ? <View>
+                    <NavButton
+                      backgroundColor='lawngreen'
+                      onPress={() => this.drawNextQuestion(true)}
+                      text={'Correct'}/>
+                    <NavButton
+                      backgroundColor='orangered'
+                      onPress={() => this.drawNextQuestion(false)}
+                      text={'Incorrect'}/>
+                  </View>
+                : <NavButton
+                    onPress={this.revealAnswer}
+                    text={'View Answer'}/>
+              }
+            </View>
+            <NavButton
+                style={styles.finishBtn}
+                onPress={() => this.handleFinishQuiz()}
+                text={'Finish Quiz'} />
           </View>
       }
       </View>
@@ -90,3 +107,42 @@ function mapStateToProps(state, { route }) {
 }
 
 export default connect(mapStateToProps)(QuizView)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    marginBottom: 48 //Take from onLayout of TabNavigator
+  },
+  main: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
+  header:{
+    flex: 1,
+    flexDirection:'column',
+    alignItems: 'flex-end'
+  },
+  headerTxt:{
+    //alignSelf:'flex-end'
+  },
+  card:{
+    flex:6,
+    fontSize: 24,
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    marginVertical: 50,
+    marginHorizontal: 50
+  },
+  cardTxt:{
+    fontSize: 24,
+    alignSelf: 'stretch'
+  },
+  answerBts: {
+    flex: 4
+  },
+  finishBtn: {
+    flex: 1
+  }
+})
