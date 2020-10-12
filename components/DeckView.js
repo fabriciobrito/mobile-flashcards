@@ -3,8 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { deleteCard, deleteDeck } from '../actions';
+import NavButton from './NavButton';
 
 class DeckView extends Component {
+  componentDidMount(){
+    const { navigation, deck } = this.props;
+    navigation.setOptions({headerTitle: deck.title})
+  }
   state = {
     questionIndex: 0,
     showAnswer: false
@@ -49,7 +54,10 @@ class DeckView extends Component {
             style={styles.nav}
             onPress={() => this.nextQuestion(-1)}
             disabled={questionIndex <= 0}>
-            <MaterialIcons name="navigate-before" size={72} color="black" />
+            <MaterialIcons
+              name='navigate-before'
+              size={72}
+              color={questionIndex <= 0 ? 'lightgrey' : 'black'}/>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.card}
@@ -66,31 +74,33 @@ class DeckView extends Component {
             style={styles.nav}
             onPress={() => this.nextQuestion(1)}
             disabled={questionIndex >= questions.length -1}>
-            <MaterialIcons name="navigate-next" size={72} color="black" />
+            <MaterialIcons
+              name='navigate-next'
+              size={72}
+              color={questionIndex >= questions.length -1?'lightgrey':'black'} />
           </TouchableOpacity>
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity
-            style={[styles.button]}
+          <NavButton
+            backgroundColor={'lawngreen'}
             onPress={() => navigation.navigate('QuizView', {name: title})}
-            disabled={questions.length === 0}>
-            <Text style={styles.buttonTxt}>Start Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('AddCard', {name: title})}>
-            <Text style={styles.buttonTxt}>Add Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button]}
-            onPress={this.onDeleteCard}>
-            <Text style={styles.buttonTxt}>Delete Card</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button]}
-            onPress={this.onDeleteDeck}>
-            <Text style={styles.buttonTxt}>Delete Deck</Text>
-          </TouchableOpacity>
+            disabled={questions.length === 0}
+            text={'Start Quiz'} />
+          <NavButton
+            onPress={() => navigation.navigate('AddCard', {name: title})}
+            text={'Add Card'}
+          />
+          <NavButton
+            backgroundColor={'gold'}
+            onPress={this.onDeleteCard}
+            text={'Delete Card'}
+          />
+          <NavButton
+            backgroundColor={'orangered'}
+            color={'white'}
+            onPress={this.onDeleteDeck}
+            text={'Delete Deck'}
+          />
         </View>
       </View>
     )
@@ -128,7 +138,8 @@ const styles = StyleSheet.create({
     flex:5
   },
   nav: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'center'
   },
   cardTxt:{
     fontSize: 24,
@@ -138,18 +149,6 @@ const styles = StyleSheet.create({
     padding: 10
   },
   buttons: {
-    alignSelf: 'center'
-  },
-  button: {
-    borderColor: 'black',
-    marginVertical: 10,
-    alignSelf: 'center',
-    height: 30,
-    width: 200,
-    justifyContent: 'center',
-    borderWidth: 1
-  },
-  buttonTxt: {
     alignSelf: 'center'
   }
 })
