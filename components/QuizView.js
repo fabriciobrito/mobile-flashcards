@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end'
   },
   headerTxt:{
-    //alignSelf:'flex-end'
+    marginRight: 20
   },
   card:{
     flex:6,
