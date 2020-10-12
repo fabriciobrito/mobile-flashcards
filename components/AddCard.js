@@ -6,6 +6,10 @@ import { addCard } from '../actions';
 import NavButton from './NavButton';
 
 class AddCard extends Component {
+  componentDidMount(){
+    const { navigation, name } = this.props;
+    navigation.setOptions({headerTitle: `Add Card to ${name}`})
+  }
   state = {
     question: '',
     answer: ''
@@ -17,8 +21,7 @@ class AddCard extends Component {
     this.setState(()=>({answer: text}))
   }
   onSubmit = () => {
-    const { dispatch, route } = this.props;
-    const { name } = route.params;
+    const { dispatch, name } = this.props;
     dispatch(addCard({deck: name, card: this.state}))
 
     const { navigation } = this.props;
@@ -57,7 +60,14 @@ class AddCard extends Component {
   }
 }
 
-export default connect()(AddCard)
+function mapStateToProps(_, { route }) {
+  const { name } = route.params;
+  return {
+    name
+  }
+}
+
+export default connect(mapStateToProps)(AddCard)
 
 const styles = StyleSheet.create({
   container: {
