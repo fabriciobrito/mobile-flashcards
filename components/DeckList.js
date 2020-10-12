@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar }
+  from 'react-native';
 import { fetchData } from '../utils/api';
 import { receiveEntries } from '../actions'
 import DeckIcon from './DeckIcon';
@@ -14,17 +15,20 @@ class DeckList extends Component {
       }
     )
   }
+  renderItem = ({ item }) => (<DeckIcon style={styles.item} deck={item} />)
   render() {
     const { decks } = this.props;
     return(
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <SafeAreaView style={styles.container}>
         {decks.length
-          ? decks.map((deck) => (
-              <DeckIcon key={deck} deck={deck} />
-            ))
+          ? <FlatList
+              data={decks}
+              renderItem={this.renderItem}
+              keyExtractor={item => item}
+              />
           : <Text>No Decks Created Yet.</Text>
         }
-      </View>
+      </SafeAreaView>
     )
   }
 }
@@ -36,3 +40,11 @@ function mapStateToProps( state ) {
 }
 
 export default connect(mapStateToProps)(DeckList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    alignItems: 'stretch'
+  }
+})
