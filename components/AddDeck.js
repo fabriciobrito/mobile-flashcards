@@ -25,6 +25,7 @@ class AddDeck extends Component {
     this.setState(() => ({deckName:''}))
   }
   render() {
+    const { deckName } = this.state;
     return(
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Enter the Deck Name</Text>
@@ -32,10 +33,13 @@ class AddDeck extends Component {
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
           onChangeText={(text) => this.onChangeText(text)}
           placeholder='Deck Name'
-          value={this.state.deckName}
+          value={deckName}
+          maxLength={25}
+          autoFocus={true}
         />
         <TouchableOpacity
-          onPress={this.addDeck}>
+          onPress={this.addDeck}
+          disabled={deckName === ''}>
           <Text>Submit</Text>
         </TouchableOpacity>
       </View>
