@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -7,12 +7,23 @@ export default function DeckIcon(props) {
   const { deck } = props;
   const navigation = useNavigation();
   return(
-    <View>
+    <View style={styles.item}>
       <TouchableOpacity
         onPress={() => navigation.navigate('DeckView', {deck: deck})}>
-        <MaterialCommunityIcons name="cards" size={72} color="black" />
-        <Text>{deck}</Text>
+        <MaterialCommunityIcons name="cards" size={120} color="black" />
+        <Text style={styles.text}>{deck}</Text>
       </TouchableOpacity>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  item: {
+    marginVertical: 25,
+    alignItems: 'center'
+  },
+  text: {
+    alignSelf: 'center',
+    fontSize: 30
+  }
+})
