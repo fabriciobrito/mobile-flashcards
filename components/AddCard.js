@@ -38,7 +38,6 @@ class AddCard extends Component {
           placeholder='Question'
           value={question}
           maxLength={100}
-          multiline={true}
           autoFocus={true}
         />
         <Text>Enter the Card Answer</Text>
@@ -48,7 +47,7 @@ class AddCard extends Component {
           placeholder='Answer'
           value={answer}
           multiline={true}
-          maxLength={100}
+          maxLength={200}
         />
         <NavButton
           onPress={this.onSubmit}
