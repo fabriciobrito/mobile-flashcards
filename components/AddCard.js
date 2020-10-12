@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from 'react-native';
 import { addCard } from '../actions';
 
 class AddCard extends Component {
@@ -25,7 +25,7 @@ class AddCard extends Component {
   render() {
     const { answer, question } = this.state;
     return(
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Enter the Card Question</Text>
         <TextInput
           style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
@@ -33,6 +33,7 @@ class AddCard extends Component {
           placeholder='Question'
           value={question}
           maxLength={100}
+          multiline={true}
           autoFocus={true}
         />
         <Text>Enter the Card Answer</Text>
@@ -41,14 +42,15 @@ class AddCard extends Component {
           onChangeText={text => this.onChangeAnswer(text)}
           placeholder='Answer'
           value={answer}
+          multiline={true}
           maxLength={100}
         />
         <TouchableOpacity
           onPress={this.onSubmit}
-          disabled={answer !== '' && question !== ''}>
+          disabled={answer === '' || question === ''}>
           <Text>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
