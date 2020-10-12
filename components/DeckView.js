@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { deleteCard, deleteDeck } from '../actions';
 
 class DeckView extends Component {
@@ -39,16 +40,21 @@ class DeckView extends Component {
     const { questions, title } = deck;
     const { questionIndex, showAnswer } = this.state;
     return(
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{deck.questions.length} Cards</Text>
-        <View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.headerTxt}>{deck.questions.length} Cards</Text>
+        </View>
+        <View style={styles.main}>
           <TouchableOpacity
+            style={styles.nav}
             onPress={() => this.nextQuestion(-1)}
             disabled={questionIndex <= 0}>
-            <Text>{'<'}</Text>
+            <MaterialIcons name="navigate-before" size={72} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.toggleShowAnswer}>
-            <Text>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={this.toggleShowAnswer}>
+            <Text style={styles.cardTxt}>
               {questions.length > 0
                 ? showAnswer
                   ? questions[questionIndex].answer
@@ -57,26 +63,35 @@ class DeckView extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
+            style={styles.nav}
             onPress={() => this.nextQuestion(1)}
             disabled={questionIndex >= questions.length -1}>
-            <Text>{'>'}</Text>
+            <MaterialIcons name="navigate-next" size={72} color="black" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('AddCard', {name: title})}>
-          <Text>Add Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onDeleteCard}>
-          <Text>Delete Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('QuizView', {name: title})}
-          disabled={questions.length === 0}>
-          <Text>Start Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onDeleteDeck}>
-          <Text>Delete Deck</Text>
-        </TouchableOpacity>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={() => navigation.navigate('QuizView', {name: title})}
+            disabled={questions.length === 0}>
+            <Text style={styles.buttonTxt}>Start Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('AddCard', {name: title})}>
+            <Text style={styles.buttonTxt}>Add Card</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={this.onDeleteCard}>
+            <Text style={styles.buttonTxt}>Delete Card</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button]}
+            onPress={this.onDeleteDeck}>
+            <Text style={styles.buttonTxt}>Delete Deck</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -91,3 +106,50 @@ function mapStateToProps(state, { route }) {
 }
 
 export default connect(mapStateToProps)(DeckView);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'space-between'
+  },
+  header: {
+    alignSelf: 'center'
+  },
+  headerTxt: {
+    fontSize: 32
+  },
+  main: {
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  card: {
+    flex:5
+  },
+  nav: {
+    flex: 1
+  },
+  cardTxt:{
+    fontSize: 24,
+    borderWidth: 1,
+    borderColor: 'black',
+    minHeight: 150,
+    padding: 10
+  },
+  buttons: {
+    alignSelf: 'center'
+  },
+  button: {
+    borderColor: 'black',
+    marginVertical: 10,
+    alignSelf: 'center',
+    height: 30,
+    width: 200,
+    justifyContent: 'center',
+    borderWidth: 1
+  },
+  buttonTxt: {
+    alignSelf: 'center'
+  }
+})
