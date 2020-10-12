@@ -3,6 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import NavButton from './NavButton';
 
 export default class ResultView extends Component {
+  componentDidMount() {
+    const { navigation, route } = this.props;
+    const { title } = route.params;
+    navigation.setOptions({headerTitle: `${title} Quiz Results`})
+  }
   render() {
     const { navigation, route } = this.props;
     const { answered, correct, total } = route.params;
