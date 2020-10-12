@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, StyleSheet }
+  from 'react-native';
 import { addCard } from '../actions';
+import NavButton from './NavButton';
 
 class AddCard extends Component {
   state = {
@@ -25,10 +27,10 @@ class AddCard extends Component {
   render() {
     const { answer, question } = this.state;
     return(
-      <KeyboardAvoidingView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <KeyboardAvoidingView style={styles.container}>
         <Text>Enter the Card Question</Text>
         <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          style={styles.input}
           onChangeText={text => this.onChangeQuestion(text)}
           placeholder='Question'
           value={question}
@@ -38,21 +40,37 @@ class AddCard extends Component {
         />
         <Text>Enter the Card Answer</Text>
         <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          style={styles.input}
           onChangeText={text => this.onChangeAnswer(text)}
           placeholder='Answer'
           value={answer}
           multiline={true}
           maxLength={100}
         />
-        <TouchableOpacity
+        <NavButton
           onPress={this.onSubmit}
-          disabled={answer === '' || question === ''}>
-          <Text>Submit</Text>
-        </TouchableOpacity>
+          disabled={answer === '' || question === ''}
+          text='Submit'
+        />
       </KeyboardAvoidingView>
     )
   }
 }
 
 export default connect()(AddCard)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  input: {
+    alignSelf: 'stretch',
+    marginHorizontal: 40,
+    marginVertical:20,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
+  }
+})
