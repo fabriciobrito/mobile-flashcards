@@ -40,8 +40,9 @@ class QuizView extends Component {
     const { navigation, deck } = this.props;
     const { answered, correctAnswers } = this.state;
     navigation.navigate('ResultView', {
+      title: deck.title,
       answered: answered + (correct !== undefined? 1 : 0),
-      correct: correctAnswers + correct? 1 : 0,
+      correct: correctAnswers + (correct? 1 : 0),
       total: deck.questions.length
     })
   }
