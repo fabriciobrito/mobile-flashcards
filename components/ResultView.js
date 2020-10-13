@@ -16,10 +16,15 @@ export default class ResultView extends Component {
 
         <View style={styles.result}>
           <Text style={styles.number}>
-            {Math.round((correct/answered)*100)}%
+            {answered
+              ? Math.round((correct/answered)*100)
+              : 0}%
           </Text>
           <Text style={styles.description}>
             Correct Answers
+          </Text>
+          <Text style={styles.description}>
+            {`${correct} out of ${answered}`}
           </Text>
         </View>
 
@@ -30,9 +35,14 @@ export default class ResultView extends Component {
           <Text style={styles.description}>
             Cards from Deck Answered
           </Text>
+          <Text style={styles.description}>
+            {`${answered} out of ${total}`}
+          </Text>
         </View>
 
         <NavButton
+          backgroundColor={'royalblue'}
+          color={'white'}
           onPress={() => navigation.navigate('DeckView')}
           text={'OK'}/>
       </View>
