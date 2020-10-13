@@ -5,6 +5,7 @@ import DeckView from '../components/DeckView';
 import AddCard from '../components/AddCard';
 import QuizView from '../components/QuizView';
 import ResultView from '../components/ResultView';
+import AddDeck from '../components/AddDeck';
 
 const HomeStack = createStackNavigator();
 
@@ -13,7 +14,7 @@ export default function Home() {
     <HomeStack.Navigator>
       <HomeStack.Screen name="Home" component={DeckList}
         options={{
-          headerTitle:'Flash Cards'
+          headerTitle:'Mobile Flash Cards'
         }} />
       <HomeStack.Screen name="DeckView" component={DeckView}
         options={{
@@ -30,6 +31,10 @@ export default function Home() {
         <HomeStack.Screen name="ResultView" component={ResultView}
         options={{
           headerTitle:'Result'
+        }} />
+        <HomeStack.Screen name="Add Deck" component={AddDeck}
+        options={{
+          headerTitle:'Add Deck'
         }} />
     </HomeStack.Navigator>
   )
