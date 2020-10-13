@@ -64,7 +64,7 @@ class QuizView extends Component {
                 {remainingQuestions[drawnIndex].question}
               </Text>
               {showAnswer && (
-                <Text style={styles.cardTxt}>
+                <Text style={[styles.cardTxt, {borderTopWidth: 1}]}>
                   {remainingQuestions[drawnIndex].answer}
                 </Text>
               )}
@@ -74,23 +74,28 @@ class QuizView extends Component {
               {showAnswer
                 ? <View>
                     <NavButton
-                      backgroundColor='lawngreen'
+                      backgroundColor='forestgreen'
+                      color={'white'}
                       onPress={() => this.drawNextQuestion(true)}
                       text={'Correct'}/>
                     <NavButton
                       backgroundColor='orangered'
+                      color={'white'}
                       onPress={() => this.drawNextQuestion(false)}
                       text={'Incorrect'}/>
                   </View>
                 : <NavButton
+                    backgroundColor={'royalblue'}
+                    color={'white'}
                     onPress={this.revealAnswer}
                     text={'View Answer'}/>
               }
             </View>
             <NavButton
-                style={styles.finishBtn}
-                onPress={() => this.handleFinishQuiz()}
-                text={'Finish Quiz'} />
+              color={'orangered'}
+              style={styles.finishBtn}
+              onPress={() => this.handleFinishQuiz()}
+              text={'Finish Quiz'} />
           </View>
       }
       </View>
@@ -111,8 +116,7 @@ export default connect(mapStateToProps)(QuizView)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    marginBottom: 48 //Take from onLayout of TabNavigator
+    marginTop: StatusBar.currentHeight || 0
   },
   main: {
     flex: 1,
@@ -127,8 +131,7 @@ const styles = StyleSheet.create({
     marginRight: 20
   },
   card:{
-    flex:6,
-    fontSize: 24,
+    flex:5,
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
@@ -136,8 +139,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 50
   },
   cardTxt:{
-    fontSize: 24,
-    alignSelf: 'stretch'
+    fontSize: 18,
+    alignSelf: 'stretch',
+    paddingVertical: 10
   },
   answerBts: {
     flex: 4
