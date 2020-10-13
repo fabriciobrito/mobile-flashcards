@@ -10,7 +10,7 @@ export default class ResultView extends Component {
   }
   render() {
     const { navigation, route } = this.props;
-    const { answered, correct, total } = route.params;
+    const { answered, correct, total, title } = route.params;
     return(
       <View style={styles.container}>
 
@@ -39,6 +39,12 @@ export default class ResultView extends Component {
             {`${answered} out of ${total}`}
           </Text>
         </View>
+
+        <NavButton
+          backgroundColor={'royalblue'}
+          color={'white'}
+          onPress={() => navigation.navigate('QuizView', {name: title})}
+          text={'Restart'}/>
 
         <NavButton
           backgroundColor={'royalblue'}

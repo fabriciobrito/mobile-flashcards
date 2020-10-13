@@ -12,6 +12,15 @@ class QuizView extends Component {
       remainingQuestions: [...deck.questions],
       drawnIndex: Math.floor(Math.random() * deck.questions.length)
     }))
+    navigation.addListener('focus', () => {
+      this.setState(() => ({
+        remainingQuestions: [...deck.questions],
+        drawnIndex: Math.floor(Math.random() * deck.questions.length),
+        showAnswer: false,
+        answered: 0,
+        correctAnswers: 0
+      }))
+    });
   }
   state = {
     showAnswer: false,
@@ -27,7 +36,7 @@ class QuizView extends Component {
       this.setState((prevState) => ({
         remainingQuestions,
         drawnIndex: Math.floor(Math.random() * remainingQuestions.length),
-        correctAnswers: prevState.correctAnswers + correct? 1 : 0,
+        correctAnswers: prevState.correctAnswers + (correct? 1 : 0),
         answered: prevState.answered + 1,
         showAnswer: false,
       }))
