@@ -16,7 +16,7 @@ class DeckView extends Component {
   }
   nextQuestion(direction) {
     const { deck } = this.props;
-    const questions = deck
+    const questions = deck !== undefined
       ? deck.questions.length
       : 0;
     this.setState((prevState) => ({
@@ -46,10 +46,14 @@ class DeckView extends Component {
     const { questionIndex, showAnswer } = this.state;
     return(
       <View style={styles.container}>
+
         <View style={styles.header}>
-          <Text style={styles.headerTxt}>{deck.questions.length} Cards</Text>
+          <Text style={styles.headerTxt}>{questions? questions.length : 0} Cards</Text>
+          <Text style={styles.tip}>Tap card to turn</Text>
         </View>
+
         <View style={styles.main}>
+
           <TouchableOpacity
             style={styles.nav}
             onPress={() => this.nextQuestion(-1)}
@@ -59,6 +63,7 @@ class DeckView extends Component {
               size={72}
               color={questionIndex <= 0 ? 'lightgrey' : 'black'}/>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.card}
             onPress={this.toggleShowAnswer}>
@@ -70,6 +75,7 @@ class DeckView extends Component {
                 : 'No card created yet.'}
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.nav}
             onPress={() => this.nextQuestion(1)}
@@ -79,29 +85,40 @@ class DeckView extends Component {
               size={72}
               color={questionIndex >= questions.length -1?'lightgrey':'black'} />
           </TouchableOpacity>
+
         </View>
+
         <View style={styles.buttons}>
+
           <NavButton
-            backgroundColor={'lawngreen'}
+            color={'white'}
+            backgroundColor={'royalblue'}
             onPress={() => navigation.navigate('QuizView', {name: title})}
             disabled={questions.length === 0}
             text={'Start Quiz'} />
+
           <NavButton
+            color={'white'}
+            backgroundColor={'royalblue'}
             onPress={() => navigation.navigate('AddCard', {name: title})}
             text={'Add Card'}
           />
+
           <NavButton
-            backgroundColor={'gold'}
+            color={'orangered'}
             onPress={this.onDeleteCard}
+            disabled={questions.length === 0}
             text={'Delete Card'}
           />
+
           <NavButton
-            backgroundColor={'orangered'}
-            color={'white'}
+            color={'orangered'}
             onPress={this.onDeleteDeck}
             text={'Delete Deck'}
           />
+
         </View>
+
       </View>
     )
   }
@@ -124,31 +141,38 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   header: {
+    flex: 1,
     alignSelf: 'center'
+  },
+  tip: {
+    alignSelf: 'flex-end'
   },
   headerTxt: {
     fontSize: 32
   },
   main: {
+    flex: 5,
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   card: {
-    flex:5
+    flex:4
   },
   nav: {
     flex: 1,
     justifyContent: 'center'
   },
   cardTxt:{
+    flex: 1,
     fontSize: 24,
     borderWidth: 1,
     borderColor: 'black',
-    minHeight: 150,
-    padding: 10
+    padding: 10,
+    marginVertical: 20
   },
   buttons: {
+    flex: 6,
     alignSelf: 'center'
   }
 })
