@@ -5,6 +5,7 @@ import { View, Text, SafeAreaView, FlatList, StyleSheet, StatusBar }
 import { fetchData } from '../utils/api';
 import { receiveEntries } from '../actions'
 import DeckIcon from './DeckIcon';
+import NavButton from './NavButton';
 
 class DeckList extends Component {
   componentDidMount() {
@@ -15,9 +16,9 @@ class DeckList extends Component {
       }
     )
   }
-  renderItem = ({ item }) => (<DeckIcon style={styles.item} deck={item} />)
+  renderItem = ({ item }) => (<DeckIcon deck={item} />)
   render() {
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     return(
       <SafeAreaView style={styles.container}>
         {decks.length
@@ -26,7 +27,13 @@ class DeckList extends Component {
               renderItem={this.renderItem}
               keyExtractor={item => item}
               />
-          : <Text>No Decks Created Yet.</Text>
+          : <View style={styles.emptyDeck}>
+              <Text>No Decks Created Yet.</Text>
+              <NavButton
+                onPress={() => navigation.navigate('Add Deck')}
+                text={'Create new Deck'}
+              />
+            </View>
         }
       </SafeAreaView>
     )
@@ -46,5 +53,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
     alignItems: 'stretch'
+  },
+  emptyDeck: {
+    flex: 1,
+    justifyContent: 'center',
+    alignSelf: 'center'
   }
 })
