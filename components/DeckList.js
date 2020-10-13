@@ -16,16 +16,18 @@ class DeckList extends Component {
       }
     )
   }
-  renderItem = ({ item }) => (<DeckIcon deck={item} />)
+  renderItem = ({ item }) => (
+    <DeckIcon deck={item.name} cards={item.questions} />
+  )
   render() {
     const { decks, navigation } = this.props;
     return(
       <SafeAreaView style={styles.container}>
-        {decks.length
+        {decks !== undefined
           ? <FlatList
               data={decks}
               renderItem={this.renderItem}
-              keyExtractor={item => item}
+              keyExtractor={item => item.name}
               />
           : <View style={styles.emptyDeck}>
               <Text>No Decks Created Yet.</Text>
@@ -42,7 +44,10 @@ class DeckList extends Component {
 
 function mapStateToProps( state ) {
   return {
-    decks: Object.keys(state)
+    decks: Object.keys(state).reduce((decks, deck) => {
+      decks.push({name: deck, questions: state[deck].questions.length})
+      return decks;
+    }, [])
   }
 }
 

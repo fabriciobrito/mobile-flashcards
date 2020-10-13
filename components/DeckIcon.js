@@ -4,14 +4,15 @@ import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function DeckIcon(props) {
-  const { deck } = props;
+  const { deck, cards } = props;
   const navigation = useNavigation();
   return(
     <View style={styles.item}>
       <TouchableOpacity
         onPress={() => navigation.navigate('DeckView', {deck: deck})}>
         <MaterialCommunityIcons style={styles.icon} name='cards' size={120} color='royalblue' />
-        <Text style={styles.text}>{deck}</Text>
+        <Text style={styles.deck}>{deck}</Text>
+        <Text style={styles.cards}>{`${cards} Card${cards>1?'s':''}`}</Text>
       </TouchableOpacity>
     </View>
   )
@@ -25,8 +26,11 @@ const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center'
   },
-  text: {
+  deck: {
     alignSelf: 'center',
     fontSize: 30
+  },
+  cards: {
+    alignSelf: 'center'
   }
 })
