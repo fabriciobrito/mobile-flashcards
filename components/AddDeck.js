@@ -18,8 +18,6 @@ class AddDeck extends Component {
 
     this.props.dispatch(addDeck(entry));
 
-    //ToDo: Update Local Storage
-
     const { navigation } = this.props;
     navigation.navigate('DeckView', {deck: deck});
 

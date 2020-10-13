@@ -46,9 +46,13 @@ class DeckList extends Component {
 }
 
 function mapStateToProps( state ) {
+  console.log(state);
   return {
     decks: Object.keys(state).reduce((decks, deck) => {
-      decks.push({name: deck, questions: state[deck].questions.length})
+      state[deck].questions && decks.push({
+        name: deck,
+        questions: state[deck].questions.length
+      })
       return decks;
     }, [])
   }
