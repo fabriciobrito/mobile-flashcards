@@ -17,7 +17,10 @@ class DeckList extends Component {
     )
   }
   renderItem = ({ item }) => (
-    <DeckIcon deck={item.name} cards={item.questions} />
+    <DeckIcon
+      deck={item.name}
+      cards={item.questions}
+      navigation={this.props.navigation}/>
   )
   render() {
     const { decks, navigation } = this.props;
