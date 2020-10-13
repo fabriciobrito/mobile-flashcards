@@ -48,7 +48,15 @@ class DeckView extends Component {
       <View style={styles.container}>
 
         <View style={styles.header}>
-          <Text style={styles.headerTxt}>{questions? questions.length : 0} Cards</Text>
+          <Text style={styles.headerTxt}>
+            {questions
+              ? questions.length
+              : 0} Card
+              {questions
+                ? questions.length > 1
+                  ? 's' : ''
+                : ''}
+          </Text>
           <Text style={styles.tip}>Tap card to turn</Text>
         </View>
 
