@@ -15,10 +15,10 @@ class AddCard extends Component {
     answer: ''
   }
   onChangeQuestion(text) {
-    this.setState(()=>({question: text}))
+    this.setState(()=>({question: text.replace(/^\s/,'')}))
   }
   onChangeAnswer(text) {
-    this.setState(()=>({answer: text}))
+    this.setState(()=>({answer: text.replace(/^\s/,'')}))
   }
   onSubmit = () => {
     const { dispatch, name } = this.props;
@@ -50,6 +50,8 @@ class AddCard extends Component {
           maxLength={200}
         />
         <NavButton
+          backgroundColor={'royalblue'}
+          color={'white'}
           onPress={this.onSubmit}
           disabled={answer === '' || question === ''}
           text='Submit'
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginHorizontal: 40,
     marginVertical:20,
+    paddingHorizontal: 10,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1

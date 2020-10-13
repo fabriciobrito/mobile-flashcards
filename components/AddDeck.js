@@ -10,10 +10,10 @@ class AddDeck extends Component {
     deckName: ''
   }
   onChangeText(text) {
-    this.setState(()=>({deckName: text}))
+    this.setState(()=>({deckName: text.replace(/^\s/,'')}))
   }
   addDeck = () => {
-    const deck = this.state.deckName;
+    const deck = this.state.deckName.trim();
     const entry = {name: deck};
 
     this.props.dispatch(addDeck(entry));
@@ -35,10 +35,12 @@ class AddDeck extends Component {
           onChangeText={(text) => this.onChangeText(text)}
           placeholder='Deck Name'
           value={deckName}
-          maxLength={25}
+          maxLength={20}
           autoFocus={true}
         />
         <NavButton
+          backgroundColor={'royalblue'}
+          color={'white'}
           onPress={this.addDeck}
           disabled={deckName === ''}
           text={'Submit'}/>
